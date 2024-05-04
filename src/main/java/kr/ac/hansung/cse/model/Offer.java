@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @ToString
 @NoArgsConstructor
 @Entity
-<<<<<<< HEAD
 @Table(name="offers")
 public class Offer {
     @Id
