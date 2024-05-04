@@ -6,6 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+<<<<<<< HEAD
+=======
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> fd17ab99bf44ab80a8bc5456a509a3a60572270b
 import java.util.List;
 
 //@Repository
@@ -135,3 +141,4 @@ public class OfferDao {  //CRUD
         entityManager.remove(offer);
     }
 }
+

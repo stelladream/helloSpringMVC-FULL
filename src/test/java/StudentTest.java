@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 import static org.junit.jupiter.api.Assertions.*;
+
 
 @Transactional
 @ExtendWith(SpringExtension.class)
@@ -18,6 +20,7 @@ public class StudentTest {
 
     @PersistenceContext
     private EntityManager testEntityManager;
+
 
     @Test
     public void testStudentLifecycle() {
@@ -51,7 +54,9 @@ public class StudentTest {
         // 분리된 엔티티 상태에서 변경을 시도해도 데이터베이스에 반영되지 않음을 확인
         Student detachedStudent = testEntityManager.find(Student.class, updatedStudent.getId());
 
+
         assertEquals("updated.email@hansung.ac.kr", detachedStudent.getEmail(),
                 "Email should not be updated after detachment");
+
     }
 }

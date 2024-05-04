@@ -35,8 +35,12 @@ public class OfferDaoTest {
     @Test
     @DisplayName("Test1: testGetOfferByName")
     public void testGetOfferByName() {
+
+        // 이름을 통해 Offer 객체를 가져옴
         Offer offer = offerDao.getOffer("Test Offer");
+        // 가져온 Offer 객체가 null이 아닌지 확인
         assertNotNull(offer);
+        // 가져온 Offer 객체의 이름이 예상한 값과 일치하는지 확인
         assertEquals("Test Offer", offer.getName());
     }
 
@@ -44,10 +48,14 @@ public class OfferDaoTest {
     @DisplayName("Test2: testGetOfferById")
     public void testGetOfferById() {
 
-        Offer savedOffer = offerDao.getOffer("Test Offer");
 
+        // 이름을 통해 Offer 객체를 가져옴
+        Offer savedOffer = offerDao.getOffer("Test Offer");
+        // ID를 통해 Offer 객체를 가져옴
         Offer offer = offerDao.getOffer(savedOffer.getId());
+        // 가져온 Offer 객체가 null이 아닌지 확인
         assertNotNull(offer);
+        // 가져온 Offer 객체의 ID가 예상한 값과 일치하는지 확인
         assertEquals(savedOffer.getId(), offer.getId());
     }
 
@@ -55,8 +63,12 @@ public class OfferDaoTest {
     @DisplayName("Test3: testGetOffers")
     public void testGetOffers() {
 
+
+        // 모든 Offer 객체를 가져옴
         List<Offer> offers = offerDao.getOffers();
+        // 가져온 Offer 리스트가 null이 아닌지 확인
         assertNotNull(offers);
+        // 가져온 Offer 리스트가 비어있지 않은지 확인
         assertFalse(offers.isEmpty());
     }
 
@@ -64,13 +76,16 @@ public class OfferDaoTest {
     @DisplayName("Test4: testInsert")
     public void testInsert() {
 
+
         Offer newOffer = new Offer();
         newOffer.setName("New Offer");
         newOffer.setEmail("new@example.com");
         newOffer.setText("This is a new offer");
+        // 새로운 Offer 객체를 데이터베이스에 저장
         offerDao.insert(newOffer);
+        // ID가 할당되었는지 확인
         assertNotNull(newOffer.getId());
-
+        // 저장된 Offer 객체를 가져와서 확인
         Offer savedOffer = offerDao.getOffer(newOffer.getId());
         assertNotNull(savedOffer);
         assertEquals("New Offer", savedOffer.getName());
@@ -80,11 +95,14 @@ public class OfferDaoTest {
     @DisplayName("Test5: testUpdate")
     public void testUpdate() {
 
+
+        // 저장된 Offer 객체를 가져와서 수정
         Offer offer = offerDao.getOffer("Test Offer");
         assertNotNull(offer);
         offer.setText("Updated text");
+        // 수정된 Offer 객체를 데이터베이스에 업데이트
         offerDao.update(offer);
-
+        // 업데이트된 Offer 객체를 다시 가져와서 확인
         Offer updatedOffer = offerDao.getOffer(offer.getId());
         assertNotNull(updatedOffer);
         assertEquals("Updated text", updatedOffer.getText());
@@ -94,12 +112,12 @@ public class OfferDaoTest {
     @DisplayName("Test6: testDelete")
     public void testDelete() {
 
+        // 저장된 Offer 객체를 삭제
         Offer offer = offerDao.getOffer("Test Offer");
         assertNotNull(offer);
         offerDao.delete(offer.getId());
-
+        // 삭제된 Offer 객체를 가져와서 확인
         Offer deletedOffer = offerDao.getOffer(offer.getId());
         assertNull(deletedOffer);
     }
-
 }
