@@ -53,7 +53,7 @@ public class OfferController {
         }
 
         // Controller -> Service -> Dao
-        offerService.insert(offer);
+        offerService.insertOffer(offer);
 
         return "offercreated";
     }

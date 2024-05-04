@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+// RestController -> Service -> DAO
 @Service
 public class OfferService {
 
@@ -18,7 +18,19 @@ public class OfferService {
         return offerDao.getOffers();
     }
 
-    public void insert(Offer offer) {
+    public Offer getOfferById(int id) {
+        return offerDao.getOffer(id);
+    }
+
+    public void insertOffer(Offer offer) {
         offerDao.insert(offer);
+    }
+
+    public void updateOffer(Offer offer) {
+        offerDao.update(offer);
+    }
+
+    public void deleteOfferById(int id) {
+        offerDao.delete(id);
     }
 }

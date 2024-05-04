@@ -22,10 +22,13 @@
         <security:intercept-url pattern="/" access="permitAll()"/>
         <security:intercept-url pattern="/login" access="permitAll()"/>
         <security:intercept-url pattern="/offers" access="permitAll()"/>
+        <security:intercept-url pattern="/api/**" access="permitAll()"/>
         <security:intercept-url pattern="/createoffer" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/docreate" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
         <security:intercept-url pattern="/**" access="denyAll()"/>
+
+        <security:csrf disabled="true"/>
 
         <security:form-login login-page="/login"/>
         <security:logout/>
