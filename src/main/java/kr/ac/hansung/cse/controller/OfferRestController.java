@@ -24,7 +24,7 @@ public class OfferRestController {
     private OfferService offerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Offer> getOffer(@PathVariable int id) {
+    public ResponseEntity<Offer> getOffer(@PathVariable("id") int id) {
 
         Offer offer = offerService.getOfferById(id);
         if(offer== null) {
@@ -64,7 +64,7 @@ public class OfferRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Offer> updateOffer(@PathVariable int id, @RequestBody Offer offer){
+    public ResponseEntity<Offer> updateOffer(@PathVariable("id") int id, @RequestBody Offer offer){
 
         Offer currentOffer = offerService.getOfferById(id);
         if(currentOffer == null)
@@ -80,7 +80,7 @@ public class OfferRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOffer(@PathVariable int id) {
+    public ResponseEntity<Void> deleteOffer(@PathVariable("id") int id) {
 
         Offer currentOffer = offerService.getOfferById(id);
         if(currentOffer == null)
