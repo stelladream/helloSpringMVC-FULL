@@ -1,7 +1,6 @@
 package kr.ac.hansung.cse.controller;
 
 import kr.ac.hansung.cse.exception.OfferNotFoundException;
-import kr.ac.hansung.cse.model.ErrorResponse;
 import kr.ac.hansung.cse.model.Offer;
 import kr.ac.hansung.cse.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
@@ -23,6 +20,7 @@ public class OfferRestController {
     @Autowired
     private OfferService offerService;
 
+    // Retrieve single offer
     @GetMapping("/{id}")
     public ResponseEntity<Offer> getOffer(@PathVariable("id") int id) {
 
@@ -30,10 +28,11 @@ public class OfferRestController {
         if(offer== null) {
             throw new OfferNotFoundException(id);
         }
-        return new ResponseEntity<>(offer, HttpStatus.OK) ; // body, status
+        return new ResponseEntity<Offer>(offer, HttpStatus.OK) ; // body, status
 
     }
 
+    // Retrieve All Offers
     @GetMapping
     public ResponseEntity<List<Offer>> getOffers() {
 
@@ -41,10 +40,11 @@ public class OfferRestController {
         if(offers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(offers, HttpStatus.OK) ; // body, status
+        return new ResponseEntity<List<Offer>>(offers, HttpStatus.OK) ; // body, status
 
     }
 
+    // Create new offer
     @PostMapping
     public ResponseEntity<Void> createOffer(@RequestBody Offer offer) {
 
@@ -52,17 +52,19 @@ public class OfferRestController {
 
         HttpHeaders headers = new HttpHeaders();
         // url 생성
-        UriComponents uriComponents = UriComponentsBuilder
-                .fromPath("api/offers/{id}")
+        URI locationUri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
                 .buildAndExpand(offer.getId())
-                .encode();
-        URI locationUri = uriComponents.toUri();
+                .toUri();
+
         headers.setLocation(locationUri);
 
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 
     }
 
+    //Update an offer
     @PutMapping("/{id}")
     public ResponseEntity<Offer> updateOffer(@PathVariable("id") int id, @RequestBody Offer offer){
 
@@ -76,9 +78,10 @@ public class OfferRestController {
 
         offerService.updateOffer(currentOffer);
 
-        return new ResponseEntity<>(currentOffer, HttpStatus.OK);
+        return new ResponseEntity<Offer>(currentOffer, HttpStatus.OK);
     }
 
+    // delete an offer
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOffer(@PathVariable("id") int id) {
 
@@ -87,9 +90,7 @@ public class OfferRestController {
             throw new OfferNotFoundException(id);
 
         offerService.deleteOfferById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 
     }
-
-
 }
