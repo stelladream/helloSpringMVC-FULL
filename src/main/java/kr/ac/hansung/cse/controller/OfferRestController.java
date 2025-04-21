@@ -53,10 +53,10 @@ public class OfferRestController {
         HttpHeaders headers = new HttpHeaders();
         // url 생성
         URI locationUri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(offer.getId())
-                .toUri();
+                .fromCurrentRequest()  // 현재 요청 URL 기준 (예: /api/offers)
+                .path("/{id}")        // 여기에 /{id} 추가 → /api/offers/{id}
+                .buildAndExpand(offer.getId())  // {id}를 실제 ID로 치환
+                .toUri();  // URI 객체로 변환
 
         headers.setLocation(locationUri);
 
